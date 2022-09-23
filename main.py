@@ -18,30 +18,6 @@ from sklearn.metrics import r2_score
 mpl.rcParams["font.family"] = "Times New Roman"
 plt.style.use("default")
 
-# Read the on-chain data and get it as log returns
-onchain_df = pd.read_csv("ONCHAIN.csv",index_col = 0, parse_dates = True)
-onchain_df.sort_index(ascending=False,inplace = True)
-onchain_df[onchain_df == 0] = None
-onchain_df.dropna(inplace = True)
-
-onchain_df = np.log(onchain_df/onchain_df.shift(1))
-# Read the btc data
-btc_df = pd.read_csv("BTCUSD.csv",index_col=0,parse_dates=True)
-btc_close = btc_df.loc[:,"Close"]
-
-log_returns = np.log(btc_close/btc_close.shift(1))
-log_returns.name = "Log Returns"
-
-tom_log_returns = log_returns.shift(-1)
-tom_log_returns.name = "Tomorrow's Log Returns"
-
-# Combine the DataFrames
-df = pd.concat([tom_log_returns, log_returns, onchain_df], axis = 1, join = "inner")
-df.dropna(inplace = True)
-
-X = df.drop(columns = ["Tomorrow's Log Returns","Log Returns"])
-y = df.loc[:,"Tomorrow's Log Returns"]
-
 # Functions for removing collinear predictor variables
 def GetVFISeries(predictors):
 	"""
@@ -194,22 +170,49 @@ def ResidualPlot(residuals, forecast_train):
 	ax1.scatter(forecast_train, residuals)
 	plt.show()
 
+# Read the on-chain data and get it as log returns
+onchain_df = pd.read_csv("ONCHAIN.csv",index_col = 0, parse_dates = True)
+onchain_df.sort_index(ascending=False,inplace = True)
+onchain_df[onchain_df == 0] = None
+onchain_df.dropna(inplace = True)
+
+onchain_df = np.log(onchain_df/onchain_df.shift(1))
+# Read the btc data
+btc_df = pd.read_csv("BTCUSD.csv",index_col=0,parse_dates=True)
+btc_close = btc_df.loc[:,"Close"]
+
+log_returns = np.log(btc_close/btc_close.shift(1))
+log_returns.name = "Log Returns"
+
+tom_log_returns = log_returns.shift(-1)
+tom_log_returns.name = "Tomorrow's Log Returns"
+
+# Combine the DataFrames
+df = pd.concat([tom_log_returns, log_returns, onchain_df], axis = 1, join = "inner")
+df.dropna(inplace = True)
+
+X = df.drop(columns = ["Tomorrow's Log Returns","Log Returns"])
+y = df.loc[:,"Tomorrow's Log Returns"]
+
 # We want to remove predictor variables that are correlated to other predictor variables
 RemoveCollinear(X, 5)
 
+# Split the data into training and test data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 1)
 
+# Fit the multiple linear regression model
 lin_reg = LinearRegression()
 lin_reg.fit(X_train, y_train)
+# Compute the predicted response value
 forecast_train = lin_reg.predict(X_train)
 forecast_test = lin_reg.predict(X_test)
-residuals_train = (y_train - forecast_train)
 
 # Training R2
 train_r2 = r2_score(y_train, forecast_train)
-print(train_r2)
+print(f"Training R squared: {train_r2}")
+
 # Test R2
 test_r2 = r2_score(y_test, forecast_test)
-print(test_r2)
+print(f"Test R squared: {test_r2}")
 
 
