@@ -1,7 +1,8 @@
 # Machine-Learning-Bitcoin
-A first attempt forecasting bitcoin returns using on-chain data
+On-chain analysis gained popularity during the crypto bullmarket in 2020 - 2021. Does this analysis actually have predictive power?
+Can on-chain analysis predict tomorrow's return on bitcoin?
 
-In this project I attempt to use a linear regression to forecast the log returns of Bitcoin.
+In this project I attempt to use a multiple linear regression model to forecast the next day's log returns of Bitcoin using on-chain data as the features. 
 
 Below are the on-chain metrics used.
 AVBLS : The Average block size in MB
@@ -26,3 +27,16 @@ TOUTV : The total value of all transaction outputs per day. This includes coins 
 TRFEE : Data showing the total BTC value of transaction fees miners earn per day.
 TRFUS : Data showing the total BTC value of transaction fees miners earn per day in USD.
 TRVOU : Data showing the USD trade volume from the top exchanges.
+
+
+The first step in the project is reading the data from the CSV files and creating a DataFrame containing the containing the log differences of the on-chain metrics and tomorrow's log return on bitcoin.
+We then remove all the predictor variables which are collinear
+We then fit the multiple linear regression model.
+
+The R2 statistic for the model is negative so (not financial advice) I wouldn't use this model to trade.
+
+Next steps
+- Think about the predictor variables and the response more deeply. Why would there be a linear relationship between the log difference in an on-chain metric today and the log returns of bitcoin tomorrow?
+- Should we choose a different target variable? The returns in x days? The average returns over the next x days?
+- Are there outliers? If so, how should they be handled? Does it make sense to ignore outliers? 
+- Are the high leverage points? Should they be removed?
