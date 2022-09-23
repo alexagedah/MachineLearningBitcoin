@@ -29,9 +29,10 @@ Below are the on-chain metrics used.
 - TRVOU : Data showing the USD trade volume from the top exchanges.
 
 
-The first step in the project is reading the data from the CSV files and creating a DataFrame containing the containing the log differences of the on-chain metrics and tomorrow's log return on bitcoin.
-We then remove all the predictor variables which are collinear
-We then fit the multiple linear regression model.
+- First, read the data from the CSV files and create a DataFrame containing the the log differences of the on-chain metrics and tomorrow's log return on bitcoin.
+- Remove all the predictor variables which are collinear
+- Use forward selection to remove half of the predictor variables
+- Fit the multiple linear regression model.
 
 The R2 statistic for the model is negative so (not financial advice) I wouldn't recommend using this model to make trading decisions!
 
