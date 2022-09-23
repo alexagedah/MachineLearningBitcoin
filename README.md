@@ -28,7 +28,7 @@ Below are the on-chain metrics used.
 - TRFUS : Data showing the total BTC value of transaction fees miners earn per day in USD.
 - TRVOU : Data showing the USD trade volume from the top exchanges.
 
-
+Steps
 - First, read the data from the CSV files and create a DataFrame containing the the log differences of the on-chain metrics and tomorrow's log return on bitcoin.
 - Remove all the predictor variables which are collinear
 - Use forward selection to remove half of the predictor variables
