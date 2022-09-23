@@ -33,7 +33,7 @@ The first step in the project is reading the data from the CSV files and creatin
 We then remove all the predictor variables which are collinear
 We then fit the multiple linear regression model.
 
-The R2 statistic for the model is negative so (not financial advice) I wouldn't use this model to trade.
+The R2 statistic for the model is negative so (not financial advice) I wouldn't recommend using this model to make trading decisions!
 
 Next steps
 - Think about the predictor variables and the response more deeply. Why would there be a linear relationship between the log difference in an on-chain metric today and the log returns of bitcoin tomorrow?
