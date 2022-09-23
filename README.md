@@ -37,6 +37,7 @@ The R2 statistic for the model is negative so (not financial advice) I wouldn't 
 
 Next steps
 - Think about the predictor variables and the response more deeply. Why would there be a linear relationship between the log difference in an on-chain metric today and the log returns of bitcoin tomorrow?
+- Can we eliminate predictor variables that are not statistically significant? Can we justify why the ones remaining might be statistically significant?
 - Should we choose a different target variable? The returns in x days? The average returns over the next x days?
 - Are there outliers? If so, how should they be handled? Does it make sense to ignore outliers? 
 - Are the high leverage points? Should they be removed?
