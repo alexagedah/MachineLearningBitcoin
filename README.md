@@ -1,4 +1,4 @@
-# Machine-Learning-Bitcoin
+# MachineLearningBitcoin
 On-chain analysis gained popularity during the crypto bullmarket in 2020 - 2021. Does this analysis actually have predictive power?
 Can on-chain analysis predict tomorrow's return on bitcoin?
 
