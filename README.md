@@ -1,10 +1,13 @@
 # MachineLearningBitcoin
 On-chain analysis gained popularity during the crypto bullmarket in 2020 - 2021. Does this analysis actually have predictive power?
-Can on-chain analysis predict tomorrow's return on bitcoin?
+Can on-chain analysis predict tomorrow's return on bitcoin? This project explores if on-chain data cna be used in a multiple linear regression model to forecast the next day's returns of Bitcoin.
+- First, read the data from the CSV files and create a DataFrame containing the the log differences of the on-chain metrics and tomorrow's log return on bitcoin.
+- Remove all the predictor variables which are collinear
+- Use forward selection to remove half of the predictor variables
+- Fit the multiple linear regression model.
 
-In this project I attempt to use a multiple linear regression model to forecast the next day's log returns of Bitcoin using on-chain data as the features. 
-
-Below are the on-chain metrics used.
+# Method, Results and Discussion
+Below are the on-chain metrics considered in the model.
 - AVBLS : The Average block size in MB
 - BLCHS : The total size of all block headers and transactions. Not including database indexes.
 - CPTRA : Data showing miners revenue divided by the number of transactions.
@@ -27,18 +30,11 @@ Below are the on-chain metrics used.
 - TRFEE : Data showing the total BTC value of transaction fees miners earn per day.
 - TRFUS : Data showing the total BTC value of transaction fees miners earn per day in USD.
 - TRVOU : Data showing the USD trade volume from the top exchanges.
+Firstly, collinear predictor variables have to be removed. To do this, the predictor variable with the largest variance inflation factor was removed until all remaining predictor variables had variance inflation factors below 5. Forward selction was then used to select half of the remaining predictor variables and then the linear regression model was fit. The R2 statistic for the model is negative on both the training data and test data so (not financial advice) I wouldn't recommend using this model to make trading decisions!
 
-Steps
-- First, read the data from the CSV files and create a DataFrame containing the the log differences of the on-chain metrics and tomorrow's log return on bitcoin.
-- Remove all the predictor variables which are collinear
-- Use forward selection to remove half of the predictor variables
-- Fit the multiple linear regression model.
-
-The R2 statistic for the model is negative so (not financial advice) I wouldn't recommend using this model to make trading decisions!
-
-Next steps
+# Next Steps
 - Think about the predictor variables and the response more deeply. Why would there be a linear relationship between the log difference in an on-chain metric today and the log returns of bitcoin tomorrow? Answering this will help with selecting the write precitors to include in the model
-- Can we improve the way in which we select which predictor variables to use? Currently forward selection is used to drop half of the predictor variables.
+- Can the way in which predictor variables are selected be improved? Currently forward selection is used to drop half of the predictor variables.
 - Should we choose a different target variable? The returns in x days? The average returns over the next x days?
 - Are there outliers? If so, how should they be handled? Does it make sense to ignore outliers? 
 - Are the high leverage points? Should they be removed?
